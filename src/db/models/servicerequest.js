@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       ServiceRequest.hasOne(models.ServiceRequestForeignIndex, {
         onDelete: 'CASCADE'
       })
+      ServiceRequest.hasOne(models.ServiceRequestNotarialProtocol, {
+        onDelete: 'CASCADE'
+      })
     }
   }
   ServiceRequest.init({

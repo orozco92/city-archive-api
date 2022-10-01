@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('InformativeServices', {
+    await queryInterface.createTable('informative_services', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,10 +14,10 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      priceNative: {
+      price_native: {
         type: Sequelize.DECIMAL
       },
-      priceForeign: {
+      price_foreign: {
         type: Sequelize.DECIMAL
       },
       created_at: {
@@ -31,6 +31,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('InformativeServices');
+    await queryInterface.dropTable('informative_services');
   }
 };

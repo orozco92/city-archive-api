@@ -11,13 +11,13 @@ module.exports = {
       type: {
         type: Sequelize.STRING
       },
-      appearingOrInvolved: {
+      appearing_or_involved: {
         type: Sequelize.STRING
       },
-      startDate: {
+      start_date: {
         type: Sequelize.DATEONLY
       },
-      endDate: {
+      end_date: {
         type: Sequelize.DATEONLY
       },
       city: {
@@ -25,6 +25,15 @@ module.exports = {
       },
       notary: {
         type: Sequelize.STRING
+      },
+      service_request_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'service_requests',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       created_at: {
         allowNull: false,

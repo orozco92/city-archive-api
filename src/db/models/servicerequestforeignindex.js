@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'ServiceRequestForeignIndex',
-    tableName: 'service_request_foreignIndexes',
+    tableName: 'service_request_foreign_indices',
     underscored: true,
   });
   return ServiceRequestForeignIndex;

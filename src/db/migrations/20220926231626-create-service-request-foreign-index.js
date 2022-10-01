@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ServiceRequestForeignIndices', {
+    await queryInterface.createTable('service_request_foreign_indices', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,14 +11,23 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      lastName: {
+      last_name: {
         type: Sequelize.STRING
       },
       nationality: {
         type: Sequelize.STRING
       },
-      informationOfInterest: {
+      information_of_interest: {
         type: Sequelize.TEXT
+      },
+      service_request_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'service_requests',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       created_at: {
         allowNull: false,
@@ -31,6 +40,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ServiceRequestForeignIndices');
+    await queryInterface.dropTable('service_request_foreign_indices');
   }
 };

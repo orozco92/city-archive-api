@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ServiceRequests', {
+    await queryInterface.createTable('service_requests', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,7 +14,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      lastName: {
+      last_name: {
         type: Sequelize.STRING
       },
       email: {
@@ -29,8 +29,23 @@ module.exports = {
       date: {
         type: Sequelize.DATEONLY
       },
-      service_id: {
-        type: Sequelize.INTEGER
+      informative_services_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'informative_services',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
+      },
+      requested_by: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       created_at: {
         allowNull: false,
@@ -43,6 +58,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ServiceRequests');
+    await queryInterface.dropTable('service_requests');
   }
 };

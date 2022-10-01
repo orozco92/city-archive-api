@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Archives', {
+    await queryInterface.createTable('archives', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,12 +11,21 @@ module.exports = {
       path: {
         type: Sequelize.STRING
       },
-      mimeType: {
+      mime_type: {
         type: Sequelize.STRING
       },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      public_fund_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'public_funds',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       updated_at: {
         allowNull: false,
@@ -25,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Archives');
+    await queryInterface.dropTable('archives');
   }
 };
