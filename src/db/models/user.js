@@ -15,14 +15,11 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     username: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        // validate min length 8
-      }
     },
     role: {
       type: DataTypes.STRING,
@@ -38,7 +35,9 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    phone: DataTypes.STRING
+    phone: DataTypes.STRING,
+    address: DataTypes.TEXT,
+    nationality: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User',

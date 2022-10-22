@@ -1,7 +1,8 @@
 module.exports = {
   "development": {
     "storage": 'city_archive.sqlite',
-    "dialect": "sqlite"
+    "dialect": "sqlite",
+    seedStorage: true
   },
   "test": {
     "storage": 'city_archive.test.sqlite',
@@ -12,6 +13,7 @@ module.exports = {
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    seedStorage: true
   }
 }

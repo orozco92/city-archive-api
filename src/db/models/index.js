@@ -31,6 +31,8 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+sequelize.sync().then(console.log('starting database...')).catch(err => console.log(err))
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
