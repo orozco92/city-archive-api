@@ -74,7 +74,7 @@ router.delete('/:id',
     if (!id)
       return next(new Error('Bad model ID'))
     try {
-      const data = await modelService.getServiceForModel(req.Model).delete(id, req.query)
+      const data = await modelService.getServiceForModel(req.Model).remove(id, req.query)
       res.send({ data: data })
     } catch (e) {
       next(e)
