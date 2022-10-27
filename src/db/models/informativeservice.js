@@ -13,8 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   InformativeService.init({
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
-    priceNative: DataTypes.DECIMAL,
-    priceForeign: DataTypes.DECIMAL
+    price: DataTypes.DECIMAL,
+    enabled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
   }, {
     sequelize,
     modelName: 'InformativeService',

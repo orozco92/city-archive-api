@@ -56,7 +56,7 @@ module.exports = {
     search: (model) => (req, res, next) => {
         let where = req.query.where || {}
         const search = req.query.search
-        const Model = req.Model
+        const Model = model ?? req.Model
         if (!Model)
             return next()
 
@@ -84,7 +84,7 @@ module.exports = {
      */
     where: (model) => {
         return (req, res, next) => {
-            const Model = req.Model
+            const Model = model ?? req.Model
             if (!Model)
                 return next()
             const where = req.query.where || {}
@@ -194,8 +194,8 @@ module.exports = {
      *   ```
      * @returns {function(...[*]=)}
      */
-    order: () => (req, res, next) => {
-        const Model = req.Model
+    order: (model) => (req, res, next) => {
+        const Model = model ?? req.Model
         const rawAttributesKeys = Object.keys(Model.rawAttributes)
         const isAttrCreatedAt = rawAttributesKeys.findIndex(attr => attr === 'createdAt') > -1
         const isAttrSequence = rawAttributesKeys.findIndex(attr => attr === 'sequence') > -1

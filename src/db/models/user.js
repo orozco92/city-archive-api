@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasMany(models.ServiceRequest, {
         as: 'RequestedServices',
-        foreignKey: 'requested_by',
+        foreignKey: 'requested_by_id',
         onDelete: 'CASCADE'
       })
     }
@@ -25,7 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    ci: DataTypes.STRING,
+    ci: {
+      type: DataTypes.STRING,
+      validate: {
+        len: 11
+      }
+    },
     name: DataTypes.STRING,
     lastName: DataTypes.STRING,
     email: {

@@ -7,7 +7,7 @@ const template = `
   {
     "email": "{{email}}",
     "phone": "{{phone}}",
-    "ci": "{{int 00000000000 99999999999}}",
+    "ci": "{{int 10000000000 99999999999}}",
     "name": "{{firstName}}",
     "last_name": "{{lastName}}",
     "address": "{{int 1 100}} {{street}} {{city}}",

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const queryParser = require('../services/query-parser');
 const modelService = require('../services/models');
+const passport = require('passport');
 
 router.get('/',
   queryParser.order(),
@@ -83,5 +84,7 @@ module.exports = {
   path: '/:model',
   order: 2,
   router,
-  middlewares: [queryParser.buildModel()]
+  middlewares: [
+    passport.authenticate('jwt', { failWithError: true }),
+    queryParser.buildModel()]
 };

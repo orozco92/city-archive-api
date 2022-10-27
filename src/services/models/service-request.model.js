@@ -5,6 +5,7 @@ class ServiceRequestModel extends DefaultModelService {
 
     async save(body, id, opts) {
         body.date = new Date();
+        body.UserId = opts.user
         super.save(body, id, opts);
     }
 }

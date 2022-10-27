@@ -54,10 +54,12 @@ function init(app) {
    * Error route
    */
   app.use(async function (err, req, res, next) {
-    if (req.statusCode < 400 && err.statusCode >= 400)
-      res.status(err.statusCode)
-    else
-      res.status(500)
+    if (res.statusCode < 400) {
+      if (err.statusCode < 400 && err.statusCode >= 400)
+        res.status(err.statusCode)
+      else
+        res.status(500)
+    }
     const error = {
       status: res.statusCode,
       message: err.message,

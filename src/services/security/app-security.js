@@ -1,12 +1,14 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
-var crypto = require('crypto');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 const db = require('../../db/models');
 const Op = db.Sequelize.Op;
 const md5 = require('md5');
 const session = require('express-session');
+const config = require('../../config');
 
-const localStrategy = new LocalStrategy(async function verify(username, password, done) {
+const localStrategy = new LocalStrategy(async function (username, password, done) {
     try {
         const user = await db.User.findOne({
             where: {
@@ -24,6 +26,27 @@ const localStrategy = new LocalStrategy(async function verify(username, password
     }
 })
 
+var opts = {}
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = config.secret;
+
+const jwtStrategy = new JwtStrategy(opts,
+    async function (jwt_payload, done) {
+        try {
+            const user = await db.User.findByPk(jwt_payload.id)
+            if (user) {
+                done(null, user.toJSON())
+            } else {
+                done(null, false, { message: 'INVALID TOKEN' })
+            }
+        } catch (error) {
+            console.log(error)
+            console.log('Error fetching user')
+            done(new Error('nvalid token'), false)
+        }
+    }
+);
+
 passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
         return cb(null, user);
@@ -37,6 +60,7 @@ passport.deserializeUser(function (user, cb) {
 });
 
 passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 /**
  * 

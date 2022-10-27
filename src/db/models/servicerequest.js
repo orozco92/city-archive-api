@@ -38,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.TEXT,
     nationality: DataTypes.STRING,
     date: DataTypes.DATEONLY,
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'CREATED'
+    },
   }, {
     sequelize,
     modelName: 'ServiceRequest',
