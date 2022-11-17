@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     enabled: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
-    }
+    },
+    url: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'InformativeService',

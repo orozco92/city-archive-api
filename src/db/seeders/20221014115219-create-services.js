@@ -16,6 +16,7 @@ const data = [
      y técnicos de la institución, y aparecen en ellos los ciudadanos que realizaron en su tiempo alguna operación ante notario, o fueron 
      censados`,
     price: 60,
+    url: '/foreign-index',
     created_at: new Date(),
     updated_at: new Date()
   },
@@ -35,6 +36,7 @@ const data = [
     En este caso el usuario solamente desea que se la certifique una parte de la escritura.
     A la hora del usuario recoger la certificación o escritura notarial, debe presentar un sello con valor de 5.00 cup en ambos casos.`,
     price: 300,
+    url: '/notarial-protocol',
     created_at: new Date(),
     updated_at: new Date()
   },
@@ -44,6 +46,7 @@ const data = [
     El usuario solicita la escritura textualmente como aparece en el protocolo notarial.
     A la hora del usuario recoger la certificación o escritura notarial, debe presentar un sello con valor de 5.00 cup en ambos casos.`,
     price: 40,
+    url: '/notarial-protocol',
     created_at: new Date(),
     updated_at: new Date()
   },
