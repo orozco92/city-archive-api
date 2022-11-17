@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./src/bin/www"
+    "start": "nodemon ./src/bin/www",
+    "sequelize": "sequelize",
+    "sequelize:migrate": "sequelize db:migrate",
+    "sequelize:seed": "sequelize db:seed:all"
   },
   "dependencies": {
     "@types/express": "^4.17.14",
@@ -30,6 +33,7 @@
     "dummy-json": "^3.0.5",
     "lorem-ipsum": "^2.0.8",
     "nodemon": "^2.0.20",
+    "sequelize-cli": "^6.5.2",
     "sqlite3": "^5.1.1"
   }
 }
