@@ -82,7 +82,7 @@ router.delete('/:id',
   })
 module.exports = {
   path: '/:model',
-  order: 2,
+  order: 3,
   router,
   middlewares: [
     passport.authenticate('jwt', { failWithError: true }),
