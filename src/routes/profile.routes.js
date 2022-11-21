@@ -28,7 +28,7 @@ router.get('/my-services',
             console.log(req.Model);
             req.Query.include = {
                 association: 'InformativeService',
-                attributes: ['name', 'price']
+                attributes: ['id', 'name', 'price', 'url']
             }
             const data = await req.modelService.getServiceRequests(req.Query, {
                 scope: req.query.scope,

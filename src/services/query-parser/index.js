@@ -10,18 +10,18 @@ module.exports = {
     buildModel: (model) => (req, res, next) => {
         let modelName = modelMaps.getModelFromRoute(req.params.model, req.method)
         let m = db[modelName]
-        const scope = req.query.scope
+        // const scope = req.query.scope
 
-        if (!scope)
-            m = m.unscoped()
-        else {
-            try {
-                m = m.scope(scope)
-            } catch (e) {
-                console.error(e)
-                log.error(e)
-            }
-        }
+        // if (scope == null)
+        //     m = m.unscoped()
+        // else {
+        //     try {
+        //         m = m.scope(scope)
+        //     } catch (e) {
+        //         console.error(e)
+        //         log.error(e)
+        //     }
+        // }
         req.Model = m
         next()
     },

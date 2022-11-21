@@ -47,6 +47,16 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'ServiceRequest',
     tableName: 'service_requests',
     underscored: true,
+    defaultScope: {
+      include: [{
+        association: 'InformativeService',
+        attributes: ['id', 'name']
+      }, {
+        association: 'ServiceRequestForeignIndex'
+      }, {
+        association: 'ServiceRequestNotarialProtocol'
+      }]
+    }
   });
   return ServiceRequest;
 };
