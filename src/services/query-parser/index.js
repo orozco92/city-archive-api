@@ -66,7 +66,7 @@ module.exports = {
             }
             const searchAttributes = Model.getSearchAttributes()
             searchAttributes.forEach(item => {
-                where[Op.or].push({ [item]: { [Op.iLike]: `%${search}%` } })
+                where[Op.or].push({ [item]: { [Op.like]: `%${search}%` } })
             })
         }
 
@@ -198,14 +198,12 @@ module.exports = {
         const Model = model ?? req.Model
         const rawAttributesKeys = Object.keys(Model.rawAttributes)
         const isAttrCreatedAt = rawAttributesKeys.findIndex(attr => attr === 'createdAt') > -1
-        const isAttrSequence = rawAttributesKeys.findIndex(attr => attr === 'sequence') > -1
         const queryAttrCreatedAt = !!req.query.attributes
             ? req.query.attributes.split(',').find(it => it === 'createdAt')
             : null
         let order = [
             [
-                db.Sequelize.col(isAttrSequence ? 'sequence' : isAttrCreatedAt ? 'createdAt' : 'id'),
-                (isAttrSequence || !isAttrCreatedAt) ? 'ASC' : 'DESC',
+                db.Sequelize.col(isAttrCreatedAt ? 'createdAt' : 'id'), 'DESC',
             ]]
         const rawOrder = req.query.order || ''
         if (!!rawOrder) {

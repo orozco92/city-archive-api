@@ -4,11 +4,17 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class InformativeService extends Model {
+
     static associate(models) {
       InformativeService.hasMany(models.ServiceRequest, {
         onDelete: 'CASCADE'
       })
     }
+
+    static getSearchAttributes() {
+      return ['name', 'enabled']
+    }
+
   }
   InformativeService.init({
     name: DataTypes.STRING,

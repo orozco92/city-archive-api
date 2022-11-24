@@ -4,6 +4,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class ServiceRequest extends Model {
+
     static associate(models) {
       ServiceRequest.belongsTo(models.User, {
         onDelete: 'CASCADE',
@@ -19,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       })
     }
+
+    static getSearchAttributes() {
+      return ['ci', 'status']
+    }
+
   }
   ServiceRequest.init({
     ci: {
