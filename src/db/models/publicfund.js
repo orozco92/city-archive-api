@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'PublicFund',
     tableName: 'public_funds',
     underscored: true,
+    defaultScope: {
+      include: {
+        association: 'Archives'
+      }
+    }
   });
   return PublicFund;
 };

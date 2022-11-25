@@ -19,6 +19,10 @@ const routeMap = {
         modelName: 'ServiceRequestNotarialProtocol',
         methods: ['ALL']
     },
+    'public-funds': {
+        modelName: 'PublicFund',
+        methods: ['ALL']
+    },
 }
 
 function getModelFromRoute(route, method) {
