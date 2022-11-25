@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Archive.init({
+    fileName: DataTypes.STRING,
     path: DataTypes.STRING,
     mimeType: DataTypes.STRING
   }, {

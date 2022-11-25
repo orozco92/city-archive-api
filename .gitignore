@@ -63,3 +63,6 @@ typings/
 # databases
 *.sqlite
 *.db
+
+# uploads
+uploads/
