@@ -4,7 +4,7 @@ const passport = require('passport');
 const tokenProvider = require('../services/security/token-provider');
 
 router.post('/login/',
-    passport.authenticate('local', { failureRedirect: '/login', failureMessage: true }),
+    passport.authenticate('local', { failureMessage: true }),
     tokenProvider,
 );
 
