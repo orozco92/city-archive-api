@@ -2,26 +2,57 @@ const express = require("express");
 const router = express.Router();
 const queryParser = require("../services/query-parser");
 const modelService = require("../services/models");
-const publicModels = "(informative-services|public-funds)";
-
-router.get("/download/:id/:archiveId", async function (req, res, next) {
-  try {
-    const data = await modelService
-      .getServiceForModel("PublicFund")
-      .find(req.params.id, {
-        includes: "Archives",
-      });
-    const archive = data.Archives.find(
-      (item) => item.id == req.params.archiveId
-    );
-    res.download("./" + archive.path, archive.fileName);
-  } catch (e) {
-    next(e);
-  }
-});
+const publicModels = "(informative-services|public-funds|news)";
 
 router.get(
-  "/",
+  "/:model" + publicModels + "/download/:id/:archiveId",
+  queryParser.buildModel(),
+  async function (req, res, next) {
+    try {
+      const data = await modelService
+        .getServiceForModel("PublicFund")
+        .find(req.params.id, {
+          includes: "Archives",
+        });
+      const archive = data.Archives.find(
+        (item) => item.id == req.params.archiveId
+      );
+      res.download("./" + archive.path, archive.fileName);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+router.get(
+  "/news",
+  queryParser.buildModel("News"),
+  queryParser.order(),
+  queryParser.attributes(),
+  queryParser.where(),
+  queryParser.not(),
+  queryParser.search(),
+  queryParser.queryBuilder(),
+  async function (req, res, next) {
+    const query = req.Query;
+    const model = req.Model;
+    try {
+      const data = await modelService
+        .getServiceForModel(model)
+        .getActiveNews(query, {
+          scope: req.query.scope,
+          pagination: !req.query.noPaged,
+        });
+      res.send(data);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+router.get(
+  "/:model" + publicModels,
+  queryParser.buildModel(),
   queryParser.order(),
   // queryParser.include(),
   queryParser.attributes(),
@@ -46,7 +77,8 @@ router.get(
 );
 
 router.get(
-  "/:id",
+  "/:model" + publicModels + "/:id",
+  queryParser.buildModel(),
   queryParser.order(),
   // queryParser.include(),
   queryParser.attributes(),
@@ -68,8 +100,8 @@ router.get(
 );
 
 module.exports = {
-  path: "/public/:model" + publicModels,
+  path: "/public",
   order: 2,
   router,
-  middlewares: [queryParser.buildModel()],
+  middlewares: [],
 };

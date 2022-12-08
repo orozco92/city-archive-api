@@ -8,7 +8,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
 const passport = require("./services/security/app-security");
 passport.init(app);
