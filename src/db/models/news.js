@@ -1,35 +1,35 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class PublicFund extends Model {
+  class News extends Model {
     static associate(models) {
-      PublicFund.hasMany(models.Archive, {
+      News.hasMany(models.Archive, {
         onDelete: "CASCADE",
       });
     }
+
     static getSearchAttributes() {
-      return ["catalogue", "denomination"];
+      return ["title"];
     }
   }
-  PublicFund.init(
+  News.init(
     {
-      catalogue: DataTypes.STRING,
-      denomination: DataTypes.STRING,
+      title: DataTypes.STRING,
       description: DataTypes.TEXT,
-      date: DataTypes.DATEONLY,
-      type: DataTypes.STRING,
+      endDate: DataTypes.DATEONLY,
     },
     {
       sequelize,
-      modelName: "PublicFund",
-      tableName: "public_funds",
+      modelName: "News",
+      tableName: "news",
       underscored: true,
       defaultScope: {
         include: {
           association: "Archives",
+          order: [["created_at", "asc"]],
         },
       },
     }
   );
-  return PublicFund;
+  return News;
 };

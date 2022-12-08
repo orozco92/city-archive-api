@@ -2,7 +2,7 @@ const DefaultModelService = require("./default-model-service");
 const db = require("../../db/models");
 
 class ServiceRequestModel extends DefaultModelService {
-  static name = "PublicFund";
+  static name = "News";
 
   async upload(id, files) {
     let archives = files.map((item) => ({
@@ -10,10 +10,15 @@ class ServiceRequestModel extends DefaultModelService {
       path: "/uploads/" + item.filename,
       mimeType: item.mimetype,
     }));
-    const fund = await this.find(id);
+    const news = await this.find(id);
     archives = await db["Archive"].bulkCreate(archives);
-    await fund.addArchives(archives);
+    await news.addArchives(archives);
     return true;
+  }
+
+  async getActiveNews(query, opts) {
+    query.where.endDate = { [db.Sequelize.Op.gte]: new Date() };
+    return super.list(query, opts);
   }
 }
 
