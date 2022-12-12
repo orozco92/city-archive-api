@@ -4,6 +4,10 @@ const queryParser = require("../services/query-parser");
 const modelService = require("../services/models");
 const publicModels = "(informative-services|public-funds|news)";
 
+router.get("/welcome", function (req, res, next) {
+  res.send("Welcome to City Archive API");
+});
+
 router.get(
   "/:model" + publicModels + "/download/:id/:archiveId",
   queryParser.buildModel(),
