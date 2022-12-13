@@ -1,10 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const queryParser = require('../services/query-parser');
-const modelService = require('../services/models');
-const passport = require('passport');
+const queryParser = require("../services/query-parser");
+const modelService = require("../services/models");
+const passport = require("passport");
 
-router.get('/',
+router.get(
+  "/",
   queryParser.order(),
   // queryParser.include(),
   queryParser.attributes(),
@@ -14,77 +15,84 @@ router.get('/',
   // queryParser.model(),
   queryParser.queryBuilder(),
   async function (req, res, next) {
-    const query = req.Query
-    const model = req.Model
+    const query = req.Query;
+    const model = req.Model;
     try {
       const data = await modelService.getServiceForModel(model).list(query, {
         scope: req.query.scope,
-        pagination: !req.query.noPaged
-      })
-      res.send(data)
+        pagination: !req.query.noPaged,
+      });
+      res.send(data);
     } catch (e) {
-      next(e)
+      next(e);
     }
-  })
+  }
+);
 
-router.get('/:id',
+router.get(
+  "/:id",
   queryParser.order(),
   // queryParser.include(),
   queryParser.attributes(),
   queryParser.queryBuilder(),
   async function (req, res, next) {
-    const id = req.params.id
-    const query = req.Query
-    delete query.limit
-    delete query.offset
+    const id = req.params.id;
+    const query = req.Query;
+    delete query.limit;
+    delete query.offset;
     try {
-      const data = await modelService.getServiceForModel(req.Model).find(id, query, { scope: req.query.scope })
-      res.send(data)
+      const data = await modelService
+        .getServiceForModel(req.Model)
+        .find(id, query, { scope: req.query.scope });
+      res.send(data);
     } catch (e) {
-      next(e)
+      next(e);
     }
-  })
+  }
+);
 
-router.post('/',
-  async function (req, res, next) {
-    try {
-      let instance = await modelService.getServiceForModel(req.Model).save(req.body, null, { user: req.user, entity: req.entity })
-      res.send({ data: instance })
-    } catch (e) {
-      next(e)
-    }
-  })
+router.post("/", async function (req, res, next) {
+  try {
+    let instance = await modelService
+      .getServiceForModel(req.Model)
+      .save(req.body, null, { user: req.user });
+    res.send({ data: instance });
+  } catch (e) {
+    next(e);
+  }
+});
 
-router.put('/:id',
-  async function (req, res, next) {
-    const id = req.params.id
-    if (!id)
-      return next(new Error('Bad model ID'))
-    try {
-      let instance = await modelService.getServiceForModel(req.Model).save(req.body, id, { user: req.user, entity: req.entity })
-      res.send({ data: instance })
-    } catch (e) {
-      next(e)
-    }
-  })
+router.put("/:id", async function (req, res, next) {
+  const id = req.params.id;
+  if (!id) return next(new Error("Bad model ID"));
+  try {
+    let instance = await modelService
+      .getServiceForModel(req.Model)
+      .save(req.body, id, { user: req.user });
+    res.send({ data: instance });
+  } catch (e) {
+    next(e);
+  }
+});
 
-router.delete('/:id',
-  async function (req, res, next) {
-    const id = req.params.id
-    if (!id)
-      return next(new Error('Bad model ID'))
-    try {
-      const data = await modelService.getServiceForModel(req.Model).remove(id, req.query)
-      res.send({ data: data })
-    } catch (e) {
-      next(e)
-    }
-  })
+router.delete("/:id", async function (req, res, next) {
+  const id = req.params.id;
+  if (!id) return next(new Error("Bad model ID"));
+  try {
+    const data = await modelService
+      .getServiceForModel(req.Model)
+      .remove(id, req.query);
+    res.send({ data: data });
+  } catch (e) {
+    next(e);
+  }
+});
 module.exports = {
-  path: '/:model',
+  path: "/:model",
   order: 3,
   router,
   middlewares: [
-    passport.authenticate('jwt', { failWithError: true }),
-    queryParser.buildModel()]
+    passport.authenticate("jwt", { failWithError: true }),
+    queryParser.buildModel(),
+  ],
 };
